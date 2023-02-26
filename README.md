@@ -8,33 +8,33 @@ TNAP was designed on a fairly simple premise: Predicting whether artwork was AI-
 To use the GUI, click either "open file" or "open folder." Select either file(s) or a folder of files. Once selected, the display will list each of the images, filename, and AI/manmade status as well as confidence level. When files are done processing, a CSV file of the results can be downloaded.
 
 # Info For Nerds
-The three nodes of our predictor are a random forest classifier, a convolution neural network, and a k-neighbors classifier.
-
-Random Forest Classifier Stats:
-  -Sklearn
-  -90/10 data split
-  -1000 trees
-  -Max Depth of 32
-  -Entropy criterion
+The three nodes of our predictor are a random forest classifier, a convolution neural network, and a k-neighbors classifier.  
   
-Convolution Neural Network Stats:
-  -Pytorch
-  -90/10 data split
-  -4 convolution layers with pooling
-  -2 linear layers
-  -SGD optimizer
+Random Forest Classifier Stats:  
+  -Sklearn  
+  -90/10 data split  
+  -1000 trees  
+  -Max Depth of 32  
+  -Entropy criterion  
+    
+Convolution Neural Network Stats:  
+  -Pytorch  
+  -90/10 data split  
+  -4 convolution layers with pooling  
+  -2 linear layers  
+  -SGD optimizer  
   
- K-Neighbors Classifier Stats:
-  -Sklearn
-  -90/10 data split
-  -3 neighbors
-  -Uniform weights
-  -Manhattan distance (L1)
-  
-# Future Plans
--Improving accuracy of models
-  -Training on more data
-  -Trying other model architectures
-  -Trying new models
--Web app?
--Integration with further AI tools
+ K-Neighbors Classifier Stats:  
+  -Sklearn  
+  -90/10 data split  
+  -3 neighbors  
+  -Uniform weights  
+  -Manhattan distance (L1)  
+    
+# Future Plans  
+-Improving accuracy of models  
+  -Training on more data  
+  -Trying other model architectures  
+  -Trying new models  
+-Web app?  
+-Integration with further AI tools  
