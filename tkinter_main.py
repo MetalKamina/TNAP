@@ -8,6 +8,7 @@ import signal
 import sys
 from PIL import ImageTk, Image
 import os
+from TNAP_main import predict_image
 
 array = []
 result_array = [(0,0), (0,1), (1,0), (1,1)]
@@ -87,9 +88,8 @@ def save_file(self, _event=None):
 
 
 class DataEntry(customtkinter.CTkFrame):
-    def __init__(self, master, image, image_name, **kwargs):
+    def __init__(self, master, image, image_name, pred, **kwargs):
         super().__init__(master, **kwargs)
-
 
         # add widgets onto the frame...
         self.image_name = customtkinter.CTkLabel(self)
@@ -98,6 +98,8 @@ class DataEntry(customtkinter.CTkFrame):
         if words[len(words)-1] == image_name:
             words = image_name.split("/")
         image_name = words[len(words)-1]
+        if(len(image_name) > 15):
+            image_name = image_name[:15]+str("...")
 
         self.image_name.configure(text=image_name)
         self.image_name.grid(row=0, column=1)
@@ -105,7 +107,7 @@ class DataEntry(customtkinter.CTkFrame):
 
         # this is the point where the backend will be connected to give the user the result
         self.label2 = customtkinter.CTkLabel(self)
-        self.label2.configure(text="ai image with x accuracy")
+        self.label2.configure(text=str(pred[0])+" image with "+str(pred[1])+" accuracy")
         self.label2.grid(row=0, column=2)
 
 
@@ -189,7 +191,7 @@ class App(customtkinter.CTk):
         # self.my_frame = DataEntry(master=self.scrollable_frame, width=300, height=200, corner_radius=0, fg_color="transparent")
         # self.my_frame.pack(padx=20, pady=20, fill="both", expand=True)
 
-        self.hide_loading_frame(self)
+        #self.hide_loading_frame(self)
 
 
     def hide_loading_frame(self, _event=None):
@@ -213,9 +215,11 @@ class App(customtkinter.CTk):
             my_image = Image.open(array[i])
             # call the data entry class and pack it
 
+            result = predict_image(array[i])
+
             # call to external function to get the result using the image path
             # will use the result to display the result in the data entry class
-            self.my_data = DataEntry(self.scrollable_frame, my_image, array[i], width=500, height=200, corner_radius=3, fg_color="transparent")
+            self.my_data = DataEntry(self.scrollable_frame, my_image, array[i], result, width=500, height=200, corner_radius=3, fg_color="transparent")
             self.my_data.pack(pady=20, anchor='w')
 
     def clear_packed_frames(self, _event=None):
