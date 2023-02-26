@@ -9,7 +9,7 @@ def predict_image(file_path):
     im = Image.open(imgpath).convert('L')
     im = np.array(im)
 
-    f = open('rforest76.sav', 'rb')
+    f = open('rforest75.sav', 'rb')
     model = pickle.load(f)
     f.close()
 
@@ -31,13 +31,20 @@ def predict_image(file_path):
         else:
             im = np.array(im[im.shape[0]-512:,im.shape[1]-512:]).flatten()
             rforest_pred = model.predict([im])[0]
+    else:
+        pass
+
+
     nn_pred = artnet_predict(file_path)
 
-    if(rforest_pred and nn_pred):
-        return (1,1)
-    elif((not rforest_pred) and nn_pred):
-        return (1,0)
-    elif(rforest_pred and (not nn_pred)):
-        return (0,1)
+    if((rforest_pred == 1) and (nn_pred == 1)):
+        #return (1,1)
+        return ("AI","🙂")
+    elif((rforest_pred == 0) and (nn_pred == 1)):
+        #return (1,0)
+        return ("AI","🤨")
+    elif((rforest_pred == 1) and (nn_pred == 0)):
+        #return (0,1)
+        return ("Manmade","🤨")
     else:
-        return (0,0)
+        return ("Manmade","🙂")
