@@ -5,7 +5,7 @@ A tri-node art predictor.
 TNAP was designed on a fairly simple premise: Predicting whether artwork was AI-generated or manmade through 3 unique machine learning models. Data was used to train 3 separate models, each with their own strengths and weaknesses. Users can pass images into these models and they will collectively decide upon one answer: **AI or not**. We intensively studied the behaviors these models during training and testing and decided on decision weights that would most accurately represent the actual state of the test image.
 
 # How To Use - GUI
-To use the GUI, click either "open file" or "open folder." Select either file(s) or a folder of files. Once selected, the display will list each of the images, filename, and AI/manmade status as well as confidence level. When files are done processing, a CSV file of the results can be downloaded.
+To use the GUI, first run the script "Main.py." Click either "open file" or "open folder." Select either file(s) or a folder of files. Once selected, the display will list each of the images, filename, and AI/manmade status as well as confidence level. When files are done processing, a CSV file of the results can be downloaded.
 
 # Info For Nerds
 The three nodes of our predictor are a random forest classifier, a convolution neural network, and a k-neighbors classifier.  
