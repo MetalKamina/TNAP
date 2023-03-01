@@ -200,8 +200,74 @@ class App(customtkinter.CTk):
         file.close()
 
 # run the main loop
+args =  sys.argv
 if __name__ == "__main__":
     customtkinter.set_appearance_mode("dark")
     customtkinter.set_default_color_theme("dark-blue")
     app = App()
     app.mainloop()
+
+array = []
+result_array = []
+if("-cli" in args):
+    while(1):
+        print("Input filepath, directory, or command: ", end='')
+        i = input()
+        if(i == "exit"):
+            print("Goodbye.")
+            break
+        elif(i == "save"):
+            if(len(array) == 0):
+                print("Please process a folder before saving.")
+            else:
+                file = open("results.csv", "w")
+                # write the results to the file
+                file.write("image_name,AI,accuracy\n")
+                for i in range(len(array)):
+                    words = array[i].split("\\")
+                    if words[len(words)-1] == array[i]:
+                        words = array[i].split("/")
+                    image_name = words[len(words)-1]
+
+                    file.write(image_name + "," + str(result_array[i][0]) + "," +  str(result_array[i][1]) + "\n")
+                # close the file
+                file.close()
+                print("Saved!")
+        elif(i == "help"):
+            print("Command list:")
+            print("exit - exit program")
+            print("save - save results of last folder run to csv file")
+            print("C:\\filepath\\file - process a single file")
+            print("C:\\folderpath - process entire folder")
+            print("help - display this prompt")
+            print()
+        elif(os.path.exists(i)):
+            if((".jpg" in i) or (".jpeg" in i) or (".tiff" in i) or (".png" in i)):
+                res = predict_image(i)
+                if(res[1] == "🙂"):
+                    print(str(res[0])+" image detected with moderate accuracy.")
+                else:
+                    print(str(res[0])+" image detected with dubious accuracy.")
+            else:
+                array = []
+                result_array = []
+                for filename in os.listdir(i):
+                    if filename.endswith(".jpg") or filename.endswith(".png") or filename.endswith(".tiff") or filename.endswith(".jfif"):
+                        print(str(filename)+" - ", end='')
+                        array.append(os.path.join(i, filename))
+                        res = predict_image(os.path.join(i, filename))
+                        if(res[1] == "🙂"):
+                            print(str(res[0])+" image detected with moderate accuracy.")
+                        else:
+                            print(str(res[0])+" image detected with dubious accuracy.")
+
+                        if res[0] == 'AI' and res[1] == "🙂":
+                            result_array.append((1,1))
+                        elif res[0] == 'AI' and res[1] == "🤨":
+                            result_array.append((1,0))
+                        elif res[0] == "Manmade" and res[1] == "🙂":
+                            result_array.append((0,1))
+                        else:
+                            result_array.append((0,0))
+        elif(i != ""):
+            print("Invalid command. Please enter a valid filepath, directory, or command: ", end='')
