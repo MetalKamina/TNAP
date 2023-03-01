@@ -7,6 +7,9 @@ TNAP was designed on a fairly simple premise: Predicting whether artwork was AI-
 # How To Use - GUI
 To use the GUI, first run the script "Main.py." Click either "open file" or "open folder." Select either file(s) or a folder of files. Once selected, the display will list each of the images, filename, and AI/manmade status as well as confidence level. When files are done processing, a CSV file of the results can be downloaded.
 
+# How To Use - CLI
+To use the CLI, run the script with the argument -cli after the filename. Navigate to a folder or use the full folder path, and use the filename to run the model. Full folders can be run using the folder name. Use command "save" to save the most recent folder run to the current directory.
+
 # Info For Nerds
 The three nodes of our predictor are a random forest classifier, a convolution neural network, and a k-neighbors classifier.  
   
